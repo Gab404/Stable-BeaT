@@ -19,7 +19,7 @@ Install the requirements by running : `pip install -r requirements.txt`
 
 # How to use
 
-Download the fine tuned model on Hugging Face [**here**](https://huggingface.co/gab-gdp/StableBeaT/settings)
+Download the fine tuned model on Hugging Face [**here**](https://huggingface.co/gab-gdp/StableBeaT)
 
 For the Gradio interface run : 
 
