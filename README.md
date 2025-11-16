@@ -1,6 +1,8 @@
 <h1 align="center"> SAO fine tuning for modern beat generation</h1>
 <p align="center">
-As a music and AI lover I wanted to dive into the music generation technologies. First, I started by exploring existing models for music generation such as Suno or Stable Audio 2.0, but I couldn't find any that could generate trap/rap/r&b beat as well. Then I got this idea, fine tune an open source model over a good amount of trap beat. I chose Stable Audio Open 1.0, as I found it to be the most suitable open-source foundation for this kind of task.
+As a music and AI lover I wanted to dive into the music generation technologies.
+
+First, I started by exploring existing models for music generation such as Suno or Stable Audio 2.0, but I couldn't find any that could generate trap/rap/r&b beat as well. Then I got this idea, fine tune an open source model over a good amount of trap beat. I chose Stable Audio Open 1.0, as I found it to be the most suitable open-source foundation for this kind of task.
 </p>
 
 <p align="center">
@@ -87,6 +89,7 @@ Using this metadata, I was able to generate more human-readable prompts for the 
 # Training
 
 The model was trained on a A100 Nvidia GPU Google Colab during about 42h, with a total of 40k audio segments (~277h) over 14 epochs. I set a batch size of 16, resulting in approximately 2,5k steps per epoch, so 35k steps in total. 
+The model take about ~0.37s per step on a Nvidia RTX 4050 Laptop, so for example, It takes 1min14 to generate a 200 steps beat.
 
 
 # Results Analysis
