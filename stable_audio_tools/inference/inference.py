@@ -3,12 +3,8 @@ import numpy as np
 from einops import rearrange
 import torchaudio
 
-from stable_audio_tools.inference.generation import generate_diffusion_cond
+from .generation import generate_diffusion_cond
 
-
-# -------------------------------------------------------------
-# Fonction d’inférence simple
-# -------------------------------------------------------------
 def generate_audio(
     model,
     prompt: str,
@@ -28,11 +24,11 @@ def generate_audio(
 ):
     device = torch.device(device)
 
-    # Déterminer seed
+    # Seed generation
     if seed == -1:
         seed = np.random.randint(0, 2**32 - 1, dtype=np.uint32)
 
-    # Construire le conditioning
+    # Build conditioning
     conditioning_dict = {
         "prompt": prompt,
         "seconds_start": float(start_sec),
@@ -40,10 +36,8 @@ def generate_audio(
     }
     conditioning = [conditioning_dict]
 
-    # Aucun negative prompt ici
     negative_conditioning = None
 
-    # Appeler la génération interne
     with torch.no_grad():
         audio = generate_diffusion_cond(
             model=model,
@@ -68,21 +62,18 @@ def generate_audio(
 
     # audio : tensor [1, 2, N] ou [1, 1, N]
 
-    # normalisation / clamp comme Gradio
+    # normalisation
     audio = rearrange(audio, "b d n -> d (b n)")
     audio = audio.to(torch.float32)
     audio = audio / torch.max(torch.abs(audio))
     audio = audio.clamp(-1, 1)
 
-    # conversion numpy
+    # numpy conversion
     audio = audio.cpu().numpy()
 
     return audio, sample_rate
 
 
-# -------------------------------------------------------------
-# Sauvegarde simple
-# -------------------------------------------------------------
 def save_audio(path, audio, sample_rate):
     tensor = torch.from_numpy(audio)
     torchaudio.save(path, tensor, sample_rate)
